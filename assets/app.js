@@ -10,3 +10,21 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TodoContextProvider, { TodoContext } from './contexts/TodoContext';
+import TodoTable from './components/TodoTable'
+
+class App extends React.Component {
+    state = {  }
+    render() { 
+        return (
+            <TodoContextProvider>
+                <TodoTable/>
+            </TodoContextProvider>
+        );
+    }
+}
+ 
+ReactDOM.render(<App/>, document.getElementById('root'));
