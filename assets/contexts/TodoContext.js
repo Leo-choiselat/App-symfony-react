@@ -16,11 +16,16 @@ class TodoContextProvider extends React.Component {
     // Create
     createTodo(event, todo) {
         event.preventDefault();
-        let todos = [...this.state.todos];
-        todos.push(todo);
-        this.setState({
-            todos: todos,
-        });
+        axios.post('/api/todo/create', todo)
+             .then(response => {
+                 console.log(response.data);
+                 let todos = [...this.state.todos];
+                todos.push(response.data.todo);
+                this.setState({
+                    todos: todos,
+                });
+             }
+        )
     }
 
     // Read
@@ -35,15 +40,21 @@ class TodoContextProvider extends React.Component {
 
     // Update
     updateTodo(data) {
-        let todos = [...this.state.todos];
-        let todo = todos.find(todo => {
-            return todo.id === data.id
-        });
-
-        todo.name = data.name;
-        this.setState({
-            todos: todos,
-        })
+        axios.put('/api/todo/update/' + data.id, data)
+             .then(response => {
+                let todos = [...this.state.todos];
+                let todo = todos.find(todo => {
+                    return todo.id === data.id
+                });
+        
+                todo.name = data.name;
+                this.setState({
+                    todos: todos,
+                });
+            }).catch(error => {
+                console.error(error);
+            }
+        )
     }
 
     // Delete
