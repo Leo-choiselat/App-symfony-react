@@ -22,6 +22,11 @@ class Todo
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=500)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +46,18 @@ class Todo
 
     public function toArray()
     {
-        return ['id' => $this->id, 'name' => $this->name];
+        return ['id' => $this->id, 'name' => $this->name, 'description' => $this->description];
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }
